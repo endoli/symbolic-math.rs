@@ -1,0 +1,13 @@
+[package]
+name = "symbolic-math"
+version = "0.0.1"
+authors = ["Bruce Mitchener <bruce.mitchener@gmail.com>"]
+license = "MIT/Apache-2.0"
+readme = "README.md"
+description = "Basic functionality for symbolic math and the basis of a computer algebra system."
+keywords = ["symbolic", "algebra", "math"]
+homepage = "https://github.com/endoli/symbolic-math.rs"
+repository = "https://github.com/endoli/symbolic-math.rs"
+documentation = "https://endoli.github.io/symbolic-math.rs/"
+
+[dependencies]

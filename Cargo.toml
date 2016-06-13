@@ -11,3 +11,4 @@ repository = "https://github.com/endoli/symbolic-math.rs"
 documentation = "https://endoli.github.io/symbolic-math.rs/"
 
 [dependencies]
+num = "0.1.32"

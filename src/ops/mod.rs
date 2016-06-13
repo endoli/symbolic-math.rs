@@ -4,22 +4,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! # Symbolic Math
+//! # Operations / Functions
 
-#![warn(missing_docs)]
-#![deny(trivial_numeric_casts,
-        unsafe_code, unstable_features,
-        unused_import_braces, unused_qualifications)]
+mod add;
 
-extern crate num;
-
-pub mod ops;
-mod terms;
-
-pub use self::terms::*;
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {}
-}
+pub use self::add::Add;

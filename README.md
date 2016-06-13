@@ -1,4 +1,4 @@
-# Disassemble
+# Symbolic Math
 
 [![Build Status](https://travis-ci.org/endoli/symbolic-math.rs.svg?branch=master)](https://travis-ci.org/endoli/symbolic-math.rs)
 [![](http://meritbadge.herokuapp.com/symbolic-math)](https://crates.io/crates/symbolic-math)

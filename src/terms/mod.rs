@@ -17,7 +17,7 @@ pub trait Expression: fmt::Debug {
 #[derive(Debug)]
 pub enum Term {
     Integer(BigInt),
-    Expression(Box<Expression>),
+    Expression(Box<dyn Expression>),
     Rational(BigRational),
     Symbol(String),
 }
@@ -112,8 +112,8 @@ impl From<BigInt> for Term {
 }
 
 /// Construct a `Term::Expression`.
-impl From<Box<Expression>> for Term {
-    fn from(value: Box<Expression>) -> Self {
+impl From<Box<dyn Expression>> for Term {
+    fn from(value: Box<dyn Expression>) -> Self {
         Term::Expression(value)
     }
 }

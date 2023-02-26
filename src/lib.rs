@@ -7,9 +7,13 @@
 //! # Symbolic Math
 
 #![warn(missing_docs)]
-#![deny(trivial_numeric_casts,
-        unsafe_code, unstable_features,
-        unused_import_braces, unused_qualifications)]
+#![deny(
+    trivial_numeric_casts,
+    unsafe_code,
+    unstable_features,
+    unused_import_braces,
+    unused_qualifications
+)]
 
 extern crate num;
 

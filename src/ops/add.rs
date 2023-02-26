@@ -20,8 +20,9 @@ pub struct Add {
 impl Add {
     /// Construct a new instance of `Add`.
     fn new<L, R>(lhs: L, rhs: R) -> Term
-        where Term: From<L>,
-              Term: From<R>
+    where
+        Term: From<L>,
+        Term: From<R>,
     {
         Term::Expression(Box::new(Add {
             lhs: Term::from(lhs),

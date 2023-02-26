@@ -6,7 +6,7 @@
 
 use num::rational::BigRational;
 use std::ops;
-use terms::{Expression, Term};
+use crate::terms::{Expression, Term};
 
 /// Add 2 terms together.
 #[derive(Debug)]
@@ -60,7 +60,7 @@ impl ops::Add for Term {
 #[cfg(test)]
 mod tests {
     use num::bigint::BigInt;
-    use terms::{Expression, Term};
+    use crate::terms::{Expression, Term};
 
     #[test]
     fn it_works() {

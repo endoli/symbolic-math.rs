@@ -1,6 +1,6 @@
 # Symbolic Math
 
-[![Build Status](https://travis-ci.org/endoli/symbolic-math.rs.svg?branch=master)](https://travis-ci.org/endoli/symbolic-math.rs)
+[![Build Status](https://github.com/endoli/symbolic-math.rs/actions/workflows/rust.yml/badge.svg)](https://github.com/endoli/symbolic-math.rs/actions/workflows/rust.yml)
 [![](http://meritbadge.herokuapp.com/symbolic-math)](https://crates.io/crates/symbolic-math)
 
 Dual licensed under the MIT and Apache 2 licenses.

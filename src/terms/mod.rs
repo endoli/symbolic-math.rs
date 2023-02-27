@@ -6,8 +6,5 @@
 
 #![allow(missing_docs)]
 
-mod expression;
-mod symbol;
-mod number;
-mod ops;
-mod funcs;
+pub mod func;
+pub mod expression;

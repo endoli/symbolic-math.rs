@@ -8,7 +8,7 @@ use num::Integer;
 use std::{cmp, ops, fmt};
 
 /// Defines a extended integer, which can be all integers and positive/negative infinity.
-#[derive(PartialEq)]
+#[derive(PartialEq, Eq)]
 pub enum ExtendI<I> where I: Integer {
     Int(I),
     NegInf,
@@ -24,8 +24,6 @@ impl<I: Integer + fmt::Debug> fmt::Debug for ExtendI<I> {
         }
     }
 }
-
-impl<I: Integer> Eq for ExtendI<I> {}
 
 impl<I: Integer> PartialOrd for ExtendI<I> {
     fn partial_cmp(&self, other: &Self) -> Option<cmp::Ordering> {

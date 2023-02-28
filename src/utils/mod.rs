@@ -5,3 +5,4 @@
 // except according to those terms.
 
 pub mod extendint;
+pub mod dict;

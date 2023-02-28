@@ -38,7 +38,7 @@ pub enum Expression<T: Num + 'static> {
 /// Wrapper class of a reference counting pointer to an expression.
 /// 
 /// When cloning an object of this type, the Expression it points to would not be cloned.
-#[derive(Debug, Hash)]
+#[derive(Hash)]
 pub struct Expr<T: Num + 'static>(pub Rc<Expression<T>>);
 
 impl<T: Num + 'static> From<T> for Expression<T> {
@@ -103,8 +103,8 @@ impl<T: Num + Debug + 'static> Debug for Expression<T> {
             Self::Add { coeff, dict } => {
                 f.write_str("(")?;
                 coeff.fmt(f)?;
-                f.write_str(" + ")?;
                 for (term, c) in dict {
+                    f.write_str(" + ")?;
                     if c == &T::zero() {
                         continue;
                     }
@@ -119,8 +119,8 @@ impl<T: Num + Debug + 'static> Debug for Expression<T> {
             Self::Mul { coeff, dict } => {
                 f.write_str("(")?;
                 coeff.fmt(f)?;
-                f.write_str(" * ")?;
                 for (term, c) in dict {
+                    f.write_str(" * ")?;
                     if c == &T::zero() {
                         continue;
                     }
@@ -164,7 +164,11 @@ impl<T: Num + 'static> From<T> for Expr<T> {
     }
 }
 
-// TODO (Add arithmetic operation traits `Add`, `Sub`, `Mul`, `Div`, etc. to `Expression<T>`)
+impl<T: Num + Debug + 'static> Debug for Expr<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        self.0.fmt(f)
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -174,5 +178,6 @@ mod tests {
     fn test_fmt() {
         assert_eq!(format!("{:?}", Expression::from(1)), "1");
         assert_eq!(format!("{:?}", Expression::Symbol::<i32>("x_0")), "x_0");
+        assert_eq!(format!("{:?}", Expr::from(2) + Expr(Expression::Symbol("x").into())), "(2 + x)");
     }
 }

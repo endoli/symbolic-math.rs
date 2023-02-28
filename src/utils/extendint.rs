@@ -15,7 +15,7 @@ pub enum ExtendI<I> where I: Integer {
     PosInf,
 }
 
-impl<I> fmt::Debug for ExtendI<I> where I: Integer + fmt::Debug {
+impl<I: Integer + fmt::Debug> fmt::Debug for ExtendI<I> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::PosInf => f.pad_integral(true, "", "Inf"),
@@ -25,17 +25,32 @@ impl<I> fmt::Debug for ExtendI<I> where I: Integer + fmt::Debug {
     }
 }
 
-impl<I> PartialOrd for ExtendI<I> where I: Integer {
+impl<I: Integer> Eq for ExtendI<I> {}
+
+impl<I: Integer> PartialOrd for ExtendI<I> {
     fn partial_cmp(&self, other: &Self) -> Option<cmp::Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl<I: Integer> Ord for ExtendI<I> {
+    fn cmp(&self, other: &Self) -> cmp::Ordering {
         match (self, other) {
-            (Self::PosInf, Self::PosInf) | (Self::NegInf, Self::NegInf) => None,
-            (Self::PosInf, _) | (_, Self::NegInf) => Some(cmp::Ordering::Greater),
-            (_, Self::PosInf) | (Self::NegInf, _) => Some(cmp::Ordering::Less),
-            (Self::Int(v1), Self::Int(v2)) => Some(v1.cmp(v2)),
+            (Self::PosInf, Self::PosInf) | (Self::NegInf, Self::NegInf) => cmp::Ordering::Equal,
+            (Self::PosInf, _) | (_, Self::NegInf) => cmp::Ordering::Greater,
+            (_, Self::PosInf) | (Self::NegInf, _) => cmp::Ordering::Less,
+            (Self::Int(v1), Self::Int(v2)) => v1.cmp(v2),
         }
     }
 }
-impl<I> ops::Neg for ExtendI<I> where I: Integer {
+
+impl<I: Integer> From<I> for ExtendI<I> {
+    fn from(value: I) -> Self {
+        Self::Int(value)
+    }
+}
+
+impl<I: Integer> ops::Neg for ExtendI<I> {
     type Output = Self;
     fn neg(self) -> Self::Output {
         match self {
@@ -46,7 +61,7 @@ impl<I> ops::Neg for ExtendI<I> where I: Integer {
     }
 }
 
-impl<I> ops::Add for ExtendI<I> where I: Integer {
+impl<I: Integer> ops::Add for ExtendI<I> {
     type Output = Option<Self>;
     fn add(self, rhs: Self) -> Self::Output {
         match (self, rhs) {
@@ -58,14 +73,14 @@ impl<I> ops::Add for ExtendI<I> where I: Integer {
     }
 }
 
-impl<I> ops::Sub for ExtendI<I> where I: Integer {
+impl<I: Integer> ops::Sub for ExtendI<I> {
     type Output = Option<Self>;
     fn sub(self, rhs: Self) -> Self::Output {
         self + (-rhs)
     }
 }
 
-impl<I> ops::Mul for ExtendI<I> where I: Integer {
+impl<I: Integer> ops::Mul for ExtendI<I> {
     type Output = Option<Self>;
     fn mul(self, rhs: Self) -> Self::Output {
         match (self, rhs) {

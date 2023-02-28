@@ -18,6 +18,7 @@
 extern crate num;
 
 mod terms;
+mod utils;
 
 pub use self::terms::*;
 

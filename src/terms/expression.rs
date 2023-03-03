@@ -39,7 +39,7 @@ pub enum Expression<T: Num + 'static> {
 /// 
 /// When cloning an object of this type, the Expression it points to would not be cloned.
 #[derive(Hash)]
-pub struct Expr<T: Num + 'static>(pub Rc<Expression<T>>);
+pub struct Expr<T: Num + 'static>(pub(crate) Rc<Expression<T>>);
 
 impl<T: Num + 'static> From<T> for Expression<T> {
     /// Convert a number to Self::Number object
@@ -170,14 +170,45 @@ impl<T: Num + Debug + 'static> Debug for Expr<T> {
     }
 }
 
+#[macro_export]
+/// Shorthand for defining an `Expr` that points to a symbol.
+macro_rules! symbol {
+    ($x:ident) => {
+        Expr(Rc::new(Expression::Symbol(stringify!($x))))
+    };
+    ($x:ident, $t:ty) => {
+        Expr(Rc::new(Expression::Symbol::<$t>(stringify!($x))))
+    }
+}
+
+#[macro_export]
+macro_rules! define_symbol {
+    {} => {};
+    {$x:ident  $($symbols:ident)*} => {
+        let $x = symbol!($x);
+        define_symbol!($($symbols)*)
+    };
+}
+
 #[cfg(test)]
 mod tests {
+    use std::{collections::hash_map::DefaultHasher, hash::Hasher};
+
     use super::*;
 
     #[test]
     fn test_fmt() {
         assert_eq!(format!("{:?}", Expression::from(1)), "1");
-        assert_eq!(format!("{:?}", Expression::Symbol::<i32>("x_0")), "x_0");
-        assert_eq!(format!("{:?}", Expr::from(2) + Expr(Expression::Symbol("x").into())), "(2 + x)");
+        assert_eq!(format!("{:?}", symbol!(x_0, i32)), "x_0");
+        assert_eq!(format!("{:?}", Expr::from(2) + symbol!(x)), "(2 + x)");
+    }
+
+    #[test]
+    fn test_hash() {
+        let mut hasher1 = DefaultHasher::new();
+        let mut hasher2 = DefaultHasher::new();
+        Expr::from(2i32).hash(&mut hasher1);
+        Expr(Expression::Symbol::<i32>("2").into()).hash(&mut hasher2);
+        assert_ne!(hasher1.finish(), hasher2.finish());
     }
 }

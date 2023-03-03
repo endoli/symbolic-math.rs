@@ -8,4 +8,5 @@
 
 pub mod func;
 pub mod expression;
+pub mod canonical;
 pub mod op;
